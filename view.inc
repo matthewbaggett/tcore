@@ -1,0 +1,38 @@
+<?php 
+namespace tcore;
+class view{
+	private $_seo_sitename;
+	private $_seo_title;
+	private $_seo_author;
+	private $_seo_description;
+	
+	private $_file_template = 'default.phtml';
+	private $_page_template = 'index.index.phtml';
+	
+	public function get_sitename()					{ return $this->_seo_sitename;	}
+	public function get_title()						{ return $this->_seo_title;	}
+	public function get_author()					{ return $this->_seo_author; }
+	public function get_description()				{ return $this->_seo_description; }
+	
+	public function set_sitename($sitename)			{ $this->_seo_sitename = $sitename; 		return $this; }
+	public function set_title($title)				{ $this->_seo_title = $title; 				return $this; }
+	public function set_author($author)				{ $this->_seo_author = $author; 			return $this; }
+	public function set_description($description)	{ $this->_seo_description = $description; 	return $this; }
+	
+	public function set_file_template($file_template) { $this->_file_template = $file_template;	return $this; }
+	public function set_page_template($page_template) { $this->_page_template = $page_template;	return $this; }
+	
+	public function get_file_template()				{ return dirname(__FILE__) . "/../../templates/layout/{$this->_file_template}";	}
+	public function get_page_template()				{ return dirname(__FILE__) . "/../../templates/pages/{$this->_page_template}";	}
+	
+	
+	public function render(){
+		@header('Content-type: text/html; charset=UTF-8') ;
+		
+		require($this->get_file_template());
+	}
+	
+	public function render_page(){
+		require($this->get_page_template());
+	}
+}
