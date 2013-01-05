@@ -1,9 +1,9 @@
 <?php 
 // Require external components
-require_once("../lib/firephp/fb.php");
-require_once("../lib/eden/eden.php");
-require_once("../lib/eden/eden/oauth2.php");
-require_once("../lib/eden/eden/google.php");
+require_once("../lib/firephp/lib/FirePHPCore/fb.php");
+require_once("../lib/eden/library/eden.php");
+require_once("../lib/eden/library/eden/oauth2.php");
+require_once("../lib/eden/library/eden/google.php");
 
 // Require internal components
 require_once("db.inc");
