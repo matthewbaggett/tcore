@@ -35,7 +35,7 @@ class tcore{
 			self::$route['action'] = $route[1];
 		}
 		
-		// Process controller and action names
+		// Process controller, action & view names
 		$controller = '';
 		$action = '';
 		foreach(explode("-",self::$route['controller']) as $word){
@@ -43,7 +43,11 @@ class tcore{
 		}
 		foreach(explode("-",self::$route['action']) as $word){
 			$action .= ucfirst($word);
+			$view_name_segments[] = strlower($word);
 		}
+		$view_name = implode("-", $view_name_segments); 
+		
+		// Set Controller & Action
 		self::$route['controller'] = $controller;
 		self::$route['action'] = $action;
 		 
@@ -54,8 +58,15 @@ class tcore{
 		$oController = new $controller(self::$view);
 		$oController->$action();
 		
+		// Calculate the view's file name
+		$view_file = sprintf(
+				'%s.%s.phtml',
+				strtolower(self::$route['controller']),
+				strtolower($view_name)
+		);
+		
 		self::$view->set_file_template("default.phtml");
-		self::$view->set_page_template(strtolower(self::$route['controller']).".".strtolower(self::$route['action']).".phtml");
+		self::$view->set_page_template($view_file);
 	}
 	
 	static public function render(){
