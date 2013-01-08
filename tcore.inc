@@ -43,7 +43,7 @@ class tcore{
 		}
 		foreach(explode("-",self::$route['action']) as $word){
 			$action .= ucfirst($word);
-			$view_name_segments[] = strlower($word);
+			$view_name_segments[] = $word;
 		}
 		$view_name = implode("-", $view_name_segments); 
 		
