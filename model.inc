@@ -7,6 +7,18 @@ class model{
 	const TYPE_TEXT = "TEXT";
 	const TYPE_DATE = 'DATETIME';
 	const TYPE_COORD = 'DECIMAL(18,12)';
+	const TYPE_BLOB = "BLOB";
+	const TYPE_LONGBLOB = "LONGBLOB";
+	
+	private $_supported_types = array(
+			model::TYPE_INT, 
+			model::TYPE_STR, 
+			model::TYPE_TEXT, 
+			model::TYPE_DATE, 
+			model::TYPE_COORD,
+			model::TYPE_BLOB,
+			model::TYPE_LONGBLOB,
+	);
 	
 	protected $_table;
 	private $_dirty = false;
@@ -16,10 +28,42 @@ class model{
 		return new $name();
 	}
 	
+	/**
+	 * New instance instantiated
+	 * Work out the correct table name by pluralising the model's name
+	 * Initialise the MySQL table, if neccisary.
+	 */
 	public function __construct(){
-		$object_name = get_called_class();
-		$this->_table = inflect::pluralize($object_name);
+		$model_name = get_called_class();
+		$this->_table = inflect::pluralize($model_name);
 		$this->_table_init();
+	}
+	
+	/**
+	 * Called to construct the table from the model.
+	 */
+	private function _table_construct(){
+		$db = new db();
+		$sql_construct_table = $this->_table_construct_sql();
+		tcore::log($sql_construct_table);
+		$db->exec($sql_construct_table);
+	}
+	
+	/**
+	 * Called on model initialisation after __construct
+	 */
+	private function _table_init(){
+		if(!$this->_table_exists()){
+			$this->_table_construct();
+		}
+	}
+	
+	/**
+	 * Get the name of the table.
+	 * @return string
+	 */
+	public function get_table(){
+		return $this->_table;
 	}
 	
 	private function _table_exists(){
@@ -37,22 +81,38 @@ class model{
 		}
 	}
 	
+	/**
+	 * Get column's type. 
+	 * Determine what type the column is.
+	 * @param string $column name of column
+	 * @throws \exception
+	 * @return string 
+	 */
 	private function _get_column_type($column){
+		// Determine the type for the column, and set a sane default otherwise. 
+		// INT for key, STR for everything else.
 		$type_property = "_{$column}_type";
-		if(property_exists($this,$type_property)){
+		if(property_exists($this, $type_property)){
 			$type = $this->$type_property;
 		}elseif($column == $this->_get_id_column()){
 			$type = model::TYPE_INT;
 		}else{
 			$type = model::TYPE_STR;
 		}
-		if(in_array($type, array(model::TYPE_INT, model::TYPE_STR, model::TYPE_TEXT, model::TYPE_DATE, model::TYPE_COORD))){
+		
+		// Check to see if the type requested is supported.
+		if(in_array($type, $this->_supported_types)){
 			return $type;
 		}else{
 			throw new \exception("Sorry, but '{$column}' is an unsupported type!");
 		}
 	}
 	
+	/**
+	 * calculate the CONSTRUCT line for a given column
+	 * @param string $column name of column
+	 * @return string
+	 */
 	private function _table_construct_sql_column($column){
 		$type = $this->_get_column_type($column);
 		$nullable = $this->_get_id_column()==$column?'NOT NULL':'NULL';
@@ -60,6 +120,10 @@ class model{
 		return trim("`{$column}` {$type} {$nullable} {$auto_increment}");
 	}
 	
+	/**
+	 * calculate the CREATE TABLE SQL block for a given models 
+	 * @return string CREATE TABLE statement.
+	 */
 	private function _table_construct_sql(){
 		$db_name = db::get_database_name();
 		$sql  = "CREATE TABLE {$db_name}.`{$this->_table}` (\n";
@@ -71,31 +135,31 @@ class model{
 		return $sql;
 	}
 	
-	private function _table_construct(){
-		$db = new db();
-		$sql_construct_table = $this->_table_construct_sql();
-		tcore::log($sql_construct_table);
-		$db->exec($sql_construct_table);
-	}
 	
-	private function _table_init(){
-		if(!$this->_table_exists()){
-			$this->_table_construct();
-		}
-	}
 	
+	/**
+	 * called on model destruction
+	 */
 	public function __destruct(){
 		#$this->save();
 	}
 	
+	/**
+	 * Save the Model
+	 * @return \tcore\model
+	 */
 	public function save(){
 		if($this->_is_dirty()){
 			$this->_save();
-			
 		}
 		return $this;
 	}
 	
+	/**
+	 * Return the state of the object - Dirty or Clean. 
+	 * Clean objects are as-they-were from the database.
+	 * @return boolean
+	 */
 	private function _is_dirty(){
 		if($this->_dirty){
 			return TRUE;
@@ -103,6 +167,10 @@ class model{
 		return FALSE;
 	}
 	
+	/**
+	 * Called by model::save(), actually begins the savedown to DB.
+	 * @return boolean
+	 */
 	private function _save(){
 		
 		if($this->get_id()){
@@ -115,6 +183,9 @@ class model{
 		return TRUE;
 	}
 	
+	/**
+	 * Create an UPDATE statement and execute it.
+	 */
 	private function _save_update(){
 		$db_name = db::get_database_name();
 		foreach($this->_get_columns() as $column){
@@ -127,6 +198,10 @@ class model{
 		$response = db::get_instance()->exec($sql_update);
 	}
 	
+	/**
+	 * Create an INSERT statement and execute it, then reload this object from the database
+	 * We do this so anything that gets AUTOINCREMENT'd or DEFAULT'd in gets read back into the model. 
+	 */
 	private function _save_insert(){
 		$db_name = db::get_database_name();
 		
@@ -143,11 +218,18 @@ class model{
 		// Insert the row
 		$response = db::get_instance()->exec($sql_insert);
 		
+		// Set the ID of this object to be the lastInsertId from the DB layer
 		$this->set_id(db::get_instance()->lastInsertId());
 		
+		// Reload this model object.
 		$this->reload();
 	}
 	
+	/**
+	 * Load a model object by its primary key.
+	 * @param integer|string $id
+	 * @return \tcore\model
+	 */
 	public function load_by_id($id){
 		$db_name = db::get_database_name();
 		$sql_select = "SELECT * FROM {$db_name}.{$this->_table} WHERE `{$this->_get_id_column()}` = '{$id}';";
@@ -155,10 +237,21 @@ class model{
 		return $result;
 	}
 	
+	/**
+	 * Reload this object.
+	 * @return \tcore\model
+	 */
 	public function reload(){
 		return $this->load_by_id($this->get_id());
 	}
 	
+	/**
+	 * Magic getter/setter logic.
+	 * @param magic get/set name called $name
+	 * @param variables passed $arguments
+	 * @throws \exception
+	 * @return \tcore\\tcore\model
+	 */
 	public function __call($name, $arguments){
 		if(substr($name,0,4) == "get_"){
 			return $this->_get(substr($name,4));
@@ -169,10 +262,18 @@ class model{
 		throw new \exception("Cannot execute unknown method: {$name}");
 	}
 	
+	/**
+	 * Handle magic set operations
+	 * @param parameter name $name
+	 * @param variables passed $arguments
+	 * @throws \exception
+	 * @return \tcore\model
+	 */
 	protected function _set($name,$args){
 		if(property_exists($this, $name)){
+
 			if($this->$name == $args[0]){
-				
+				// If the parameter is equal, we wont bother marking ourselves as dirty				
 			}else{
 				if($this->_get_column_type($name) == model::TYPE_DATE){
 					$time = strtotime($args[0]);
@@ -189,10 +290,18 @@ class model{
 		}
 	}
 	
+	/**
+	 * Handle magic get operations
+	 * @param mixed $name
+	 */
 	protected function _get($name){
 		return $this->$name;
 	}
 	
+	/**
+	 * Get a list of columns in this object.
+	 * @return Array An array of column names as strings
+	 */
 	protected function _get_columns(){
 		$columns = array();
 		foreach(get_object_vars($this) as $class_var => $x){
@@ -203,6 +312,11 @@ class model{
 		return $columns;
 	}
 	
+	/**
+	 * Get a list of the values from the columns in the model
+	 * @param $columns_array
+	 * @return Array
+	 */
 	protected function _get_values($columns_array = null){
 		if(!$columns_array){
 			$columns_array = $this->_get_columns();
@@ -214,31 +328,46 @@ class model{
 		return $values;
 	}
 	
+	/**
+	 * Get the name of the ID column for this model
+	 * @throws \exception
+	 */
 	protected function _get_id_column(){
 		if(property_exists($this, '_key')){
 			return $this->_key;
 		}else{
-			$columns = $this->_get_columns();
+			throw new \exception("Cannot find a key column in the model for " . get_called_class());
 		}
 	}
 	
+	/**
+	 * Get the ID for this model instance.
+	 * @return integer|string
+	 */
 	public function get_id(){
 		$id_column = $this->_get_id_column();
 		return $this->$id_column;
 	}
 	
+	/**
+	 * Set the ID for this model instance
+	 * @param integer|string $id
+	 * @return \tcore\model
+	 */
 	public function set_id($id){
 		$id_column = $this->_get_id_column();
 		$this->$id_column = $id;
 		return $this;
 	}
 	
+	/**
+	 * Get a search instance to seek an instance of this model that matches.
+	 * @return \tcore\model_search
+	 */
 	public function search(){
 		return new model_search($this);
 	}	
 	
-	public function get_table(){
-		return $this->_table;
-	}
+	
 }
 
