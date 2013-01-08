@@ -73,6 +73,7 @@ class model_search{
 	}
 	
 	public function execOne(){
+		$this->limit(1);
 		$results = $this->exec();
 		if(isset($results[0])){
 			return $results[0];

@@ -16,6 +16,7 @@ class tcore{
 	static public function init(){
 		if(!self::$view instanceof \tcore\view){
 			self::$view = new view();
+			session_cache_expire(180);
 			session_start();
 			self::$route['controller'] = 'index';
 			self::$route['action'] = 'index';
