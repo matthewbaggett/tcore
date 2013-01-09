@@ -31,6 +31,11 @@ class db extends \PDO{
 		parent::__construct('mysql:dbname='.self::$database.';host='.self::$hostname, self::$username, self::$password);
 		$this->setAttribute(\PDO::ATTR_STATEMENT_CLASS, array('\tcore\db_statement', array($this)));
 	}
+	
+	public function exec ($statement) {
+		\tcore\tcore::log("SQL: " . $statement);
+		parent::exec($statement);
+	}
 }
 
 class db_statement extends \PDOStatement
