@@ -33,7 +33,7 @@ class db extends \PDO{
 	}
 	
 	public function exec ($statement) {
-		\tcore\tcore::log("SQL: " . $statement);
+		//\tcore\tcore::log("SQL: " . $statement);
 		parent::exec($statement);
 	}
 }
