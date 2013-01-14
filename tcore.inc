@@ -55,8 +55,7 @@ class tcore{
 		$controller = "{$controller}Controller";
 		$action = ucfirst(self::$route['action'])."Action";
 		require_once("../controllers/{$controller}.inc");
-		$oController = new $controller(self::$view);
-		$oController->$action();
+		
 		
 		// Calculate the view's file name
 		$view_file = sprintf(
@@ -67,6 +66,9 @@ class tcore{
 		
 		self::$view->set_file_template("default.phtml");
 		self::$view->set_page_template($view_file);
+		
+		$oController = new $controller(self::$view);
+		$oController->$action();
 	}
 	
 	static public function render(){

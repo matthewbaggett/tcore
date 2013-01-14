@@ -26,16 +26,21 @@ class view{
 	public function get_file_template()				{ return dirname(__FILE__) . "/../../templates/layout/{$this->_file_template}";	}
 	public function get_page_template()				{ return dirname(__FILE__) . "/../../templates/pages/{$this->_page_template}";	}
 	
-	public function get_body_classes()				{ return implode(" ",$this->get_body_classes_array()); }
+	public function get_body_classes()				{ return implode(" ", $this->get_body_classes_array()); }
 	
 	
 	public function render(){
-		@header('Content-type: text/html; charset=UTF-8') ;
-		
+		ob_start();
+
 		require($this->get_file_template());
+		$html = ob_get_contents();
+		ob_end_clean();
+		@header('Content-type: text/html; charset=UTF-8') ;
+		echo $html;
 	}
 	
 	public function render_page(){
+		
 		require($this->get_page_template());
 	}
 	
