@@ -13,6 +13,7 @@ class view{
 	public function get_title()						{ return $this->_seo_title;	}
 	public function get_author()					{ return $this->_seo_author; }
 	public function get_description()				{ return $this->_seo_description; }
+	public function get_generator()					{ return "Turbo Core - FourOneOne"; }
 	
 	public function set_sitename($sitename)			{ $this->_seo_sitename = $sitename; 		return $this; }
 	public function set_title($title)				{ $this->_seo_title = $title; 				return $this; }
