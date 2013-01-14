@@ -51,4 +51,8 @@ class view{
 		}
 		return $classes;
 	}
+	
+	public function get_w3c_validator_url(){
+		return "http://validator.w3.org/check?uri={$_SERVER['HTTP_HOST']}&charset=%28detect+automatically%29&doctype=Inline&group=0";
+	}
 }
