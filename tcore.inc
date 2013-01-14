@@ -86,4 +86,8 @@ class tcore{
 		self::init();
 		return self::$view;
 	}
+	
+	static function get_route(){
+		return self::$route;
+	}
 }

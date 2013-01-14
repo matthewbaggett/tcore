@@ -26,6 +26,8 @@ class view{
 	public function get_file_template()				{ return dirname(__FILE__) . "/../../templates/layout/{$this->_file_template}";	}
 	public function get_page_template()				{ return dirname(__FILE__) . "/../../templates/pages/{$this->_page_template}";	}
 	
+	public function get_body_classes()				{ return implode(" ",$this->get_body_classes_array()); }
+	
 	
 	public function render(){
 		@header('Content-type: text/html; charset=UTF-8') ;
@@ -35,5 +37,18 @@ class view{
 	
 	public function render_page(){
 		require($this->get_page_template());
+	}
+	
+	public function get_body_classes_array(){
+		$route = \tcore\tcore::get_route();
+		$classes = array();
+		$classes[] = $route['controller'];
+		$classes[] = $route['action'];
+		$classes[] = $route['controller'].'-'.$route['action'];
+		
+		foreach($classes as &$value){
+			$value = strtolower(str_replace(" ","-",$value));
+		}
+		return $classes;
 	}
 }
