@@ -3,6 +3,7 @@
 require_once("../lib/firephp/lib/FirePHPCore/fb.php");
 require_once("../lib/eden/library/eden.php");
 require_once("../lib/eden/library/eden/oauth2.php");
+require_once("../lib/eden/library/eden/amazon.php");
 require_once("../lib/eden/library/eden/google.php");
 
 // Require internal components

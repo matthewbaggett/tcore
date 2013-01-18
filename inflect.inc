@@ -98,7 +98,8 @@ class inflect
         'money',
         'rice',
         'information',
-        'equipment'
+        'equipment',
+    	'pokemon'
     );
 
 	/**

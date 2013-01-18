@@ -37,6 +37,9 @@ class model_search{
 			$digested_conditions[] = $condition->digest();
 		}
 		$where = implode(" AND ", $digested_conditions);
+		if(count($digested_conditions) > 0){
+			$where = "WHERE {$where}";
+		}
 		$sql_order = '';
 		$sql_limit = '';
 		
@@ -58,7 +61,7 @@ class model_search{
 		$sql_search = "
 			SELECT * 
 			FROM {$db_name}.{$this->model->get_table()} 
-			WHERE {$where}
+			{$where}
 			{$sql_order}
 			{$sql_limit}";
 		
