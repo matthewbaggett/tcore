@@ -189,7 +189,8 @@ class model{
 	private function _save_update(){
 		$db_name = db::get_database_name();
 		foreach($this->_get_columns() as $column){
-			$sets[] = "`$column` = '{$this->$column}'";
+			$safe = mysql_real_escape_string($this->$column);
+			$sets[] = "`$column` = '{$safe}'";
 		}
 		$sets_result = implode(", ", $sets);
 		$sql_update = "UPDATE {$db_name}.{$this->_table} SET {$sets_result} WHERE `{$this->_get_id_column()}` = '{$this->get_id()}';";
@@ -210,9 +211,15 @@ class model{
 		$index_of_key = array_search($this->_get_id_column(), $columns_array);
 		unset($columns_array[$index_of_key]);
 		
+		// Messilly sanitise the data input.
+		$columns_values = $this->_get_values($columns_array);
+		foreach($columns_values as &$value){
+			$value = mysql_real_escape_string($value);
+		}
+		
 		// Build the insert query.
 		$columns = "`" . implode("`, `",$columns_array) . "`";
-		$values =  "'" . implode("', '",$this->_get_values($columns_array)) . "'";
+		$values =  "'" . implode("', '",$columns_values) . "'";
 		$sql_insert = "INSERT INTO {$db_name}.{$this->_table} ($columns) VALUES ($values);";	
 		
 		// Insert the row

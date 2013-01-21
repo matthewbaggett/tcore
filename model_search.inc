@@ -67,9 +67,16 @@ class model_search{
 		
 		// Get objects
 		$result = db::get_instance()->query($sql_search);
+		
+		// Prep an array for our output
 		$rows = array();
-		while($row = $result->fetchObject(get_class($this->model))){
-			$rows[] = $row;
+		
+		// If any result returned
+		if($result){
+			// Loop over it and extract it into the $rows array
+			while($row = $result->fetchObject(get_class($this->model))){
+				$rows[] = $row;
+			}
 		}
 		
 		return $rows;
