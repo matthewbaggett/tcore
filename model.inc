@@ -190,7 +190,7 @@ class model{
 		$db_name = db::get_database_name();
 		foreach($this->_get_columns() as $column){
 			$safe = db::get_instance()->quote($this->$column);
-			$sets[] = "`$column` = '{$safe}'";
+			$sets[] = "`$column` = {$safe}";
 		}
 		$sets_result = implode(", ", $sets);
 		$sql_update = "UPDATE {$db_name}.{$this->_table} SET {$sets_result} WHERE `{$this->_get_id_column()}` = '{$this->get_id()}';";
