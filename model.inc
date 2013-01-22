@@ -189,7 +189,7 @@ class model{
 	private function _save_update(){
 		$db_name = db::get_database_name();
 		foreach($this->_get_columns() as $column){
-			$safe = mysql_real_escape_string($this->$column);
+			$safe = db::get_instance()->quote($this->$column);
 			$sets[] = "`$column` = '{$safe}'";
 		}
 		$sets_result = implode(", ", $sets);
@@ -214,7 +214,7 @@ class model{
 		// Messilly sanitise the data input.
 		$columns_values = $this->_get_values($columns_array);
 		foreach($columns_values as &$value){
-			$value = mysql_real_escape_string($value);
+			$value = db::get_instance()->quote($value);
 		}
 		
 		// Build the insert query.
