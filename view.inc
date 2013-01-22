@@ -60,4 +60,25 @@ class view{
 	public function get_w3c_validator_url(){
 		return "http://validator.w3.org/check?uri={$_SERVER['HTTP_HOST']}&charset=%28detect+automatically%29&doctype=Inline&group=0";
 	}
+	
+	public function l($controller, $action, $params = null){
+		$param_strings = array();
+		if(is_array($params)){
+			foreach($params as $key => $value){
+				$param_strings[] = "{$key}={$value}";
+			}
+		}
+		if(count($param_strings) > 0){
+			$str_params = "?" . implode("&",$param_strings);
+		}else{
+			$str_params = '';
+		}
+		return "/{$controller}/{$action}/{$str_params}";
+	}
+	
+	public function redirect($controller, $action, $params = null){
+	
+		header("Location: {$this->l($controller,$action,$params)}");
+		exit;
+	}
 }

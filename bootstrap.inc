@@ -6,6 +6,23 @@ require_once("../lib/eden/library/eden/oauth2.php");
 require_once("../lib/eden/library/eden/amazon.php");
 require_once("../lib/eden/library/eden/google.php");
 
+// Require in PHP SEC lib
+require_once("../lib/tcore/lib/phpseclib/Math/BigInteger.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/AES.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/DES.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/Hash.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/Random.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/RC4.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/Rijndael.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/RSA.php");
+require_once("../lib/tcore/lib/phpseclib/Crypt/TripleDES.php");
+require_once("../lib/tcore/lib/phpseclib/File/ANSI.php");
+require_once("../lib/tcore/lib/phpseclib/File/ASN1.php");
+require_once("../lib/tcore/lib/phpseclib/File/X509.php");
+require_once("../lib/tcore/lib/phpseclib/Net/SSH1.php");
+require_once("../lib/tcore/lib/phpseclib/Net/SSH2.php");
+require_once("../lib/tcore/lib/phpseclib/Net/SFTP.php");
+
 // Require internal components
 require_once("db.inc");
 require_once("inflect.inc");
