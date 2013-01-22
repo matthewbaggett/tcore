@@ -219,7 +219,7 @@ class model{
 		
 		// Build the insert query.
 		$columns = "`" . implode("`, `",$columns_array) . "`";
-		$values =  "'" . implode("', '",$columns_values) . "'";
+		$values = implode(", ",$columns_values);
 		$sql_insert = "INSERT INTO {$db_name}.{$this->_table} ($columns) VALUES ($values);";	
 		
 		// Insert the row
