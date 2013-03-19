@@ -118,7 +118,10 @@ class tcore{
 	 * @return boolean
 	 */
 	static function set_message($message, $type="success"){
-		$_SESSION['messages'][] = array('message' => $message, 'type' => $type);
+		$oMessage = new StdClass();
+		$oMessage->message 		= $message;
+		$oMessage->type 		= $type;
+		$_SESSION['messages'][] = $oMessage;
 		return TRUE;	
 	}
 	
