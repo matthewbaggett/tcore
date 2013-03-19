@@ -8,9 +8,25 @@ class tcore{
 	
 	static public function run(){
 		\tcore\tcore::log("tcore::run");
+		
+		// Start buffering output
+		ob_start();
+		
+		// Run initialisation
 		self::init();
+		
+		// Process routing
 		self::route();
+		
+		// Render
 		self::render();
+		
+		// Take captured result..
+		$output = ob_get_contents();
+		ob_end_clean();
+		
+		// And spit it at the user.
+		echo $output;
 	}
 	
 	static public function init(){
