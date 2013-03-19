@@ -92,4 +92,23 @@ class tcore{
 	static function get_route(){
 		return self::$route;
 	}
+	
+	/**
+	 * Set a message for the user to read on next page load
+	 * 
+	 * @param string $message 
+	 * @param string $type alert|error|info|success
+	 * 
+	 * @return boolean
+	 */
+	static function set_message($message, $type="success"){
+		$_SESSION['messages'][] = array('message' => $message, 'type' => $type);
+		return TRUE;	
+	}
+	
+	static function get_messages(){
+		$messages = $_SESSION['messages'];
+		unset($_SESSION['messages']);
+		return $messages;
+	}
 }
