@@ -368,11 +368,12 @@ class model{
 	}
 	
 	/**
-	 * Get a search instance to seek an instance of this model that matches.
+	 * Start a search on this type of active record
 	 * @return \tcore\model_search
 	 */
-	public function search(){
-		return new model_search($this);
+	static public function search(){
+		$class = get_called_class();
+		return new \tcore\model_search(new $class);
 	}	
 	
 	
