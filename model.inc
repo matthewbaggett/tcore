@@ -150,7 +150,10 @@ class model{
 	 */
 	public function save(){
 		if($this->_is_dirty()){
+			echo "Is dirty\n";
 			$this->_save();
+		}else{
+			echo "Is not dirty\n";
 		}
 		return $this;
 	}
