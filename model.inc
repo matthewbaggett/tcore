@@ -149,9 +149,13 @@ class model{
 	 * @return \tcore\model
 	 */
 	public function save(){
-		if($this->_is_dirty()){
+echo "Save... ";
+    	if($this->_is_dirty()){
+echo "Dirty";
 			$this->_save();
-		}
+		}else{
+echo "Clean";
+        }
 		return $this;
 	}
 	
@@ -160,7 +164,7 @@ class model{
 	 * Clean objects are as-they-were from the database.
 	 * @return boolean
 	 */
-	private function _is_dirty(){
+	protected function _is_dirty(){
 		if($this->_dirty){
 			return TRUE;
 		}
