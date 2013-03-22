@@ -149,13 +149,9 @@ class model{
 	 * @return \tcore\model
 	 */
 	public function save(){
-echo "Save... ";
-    	if($this->_is_dirty()){
-echo "Dirty";
+		if($this->_is_dirty()){
 			$this->_save();
-		}else{
-echo "Clean";
-        }
+		}
 		return $this;
 	}
 	
