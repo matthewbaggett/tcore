@@ -42,8 +42,8 @@ class tcore{
 	static public function route(){
 		self::log("tcore::route");
 
-		$sans_params = explode("?",$_SERVER['REQUEST_URI'],2);
-		$route = array_filter(explode("/",ltrim($sans_params[0],"/")));
+		$sans_params = explode("?", $_SERVER['REQUEST_URI'], 2);
+		$route = array_filter(explode("/", ltrim($sans_params[0], "/")));
 		if(isset($route[0])){
 			self::$route['controller'] = $route[0];
 		}
@@ -51,21 +51,27 @@ class tcore{
 			self::$route['action'] = $route[1];
 		}
 		
+		// Convert underscores into hyphens..
+		self::$route['controller'] = str_replace("_", "-", self::$route['controller']);
+		self::$route['action']     = str_replace("_", "-", self::$route['action']);
+		
 		// Process controller, action & view names
 		$controller = '';
 		$action = '';
-		foreach(explode("-",self::$route['controller']) as $word){
+		
+		// Take each word of the action & controller name, and camelcase it.
+		foreach(explode("-", self::$route['controller']) as $word){
 			$controller .= ucfirst($word);
 		}
-		foreach(explode("-",self::$route['action']) as $word){
+		foreach(explode("-", self::$route['action']) as $word){
 			$action .= ucfirst($word);
 			$view_name_segments[] = $word;
 		}
 		$view_name = implode("-", $view_name_segments); 
 		
 		// Set Controller & Action
-		self::$route['controller'] = $controller;
-		self::$route['action'] = $action;
+		self::$route['controller'] 	= $controller;
+		self::$route['action']		= $action;
 		 
 		// Finalise the route.
 		$controller = "{$controller}Controller";
