@@ -54,7 +54,8 @@ foreach(scandir("../models/") as $file){
 		case '.svn':
 			break;
 		default:
+            $class = str_replace(".inc", "", $file);
 			require_once("../models/{$file}");
-            new $file();
+            new $class();
 	}
 }
