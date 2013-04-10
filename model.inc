@@ -2,12 +2,12 @@
 namespace tcore;
 
 class model{
-	const TYPE_INT = "INT(10)";
-	const TYPE_STR = "VARCHAR(255)";
-	const TYPE_TEXT = "TEXT";
-	const TYPE_DATE = 'DATETIME';
-	const TYPE_COORD = 'DECIMAL(18,12)';
-	const TYPE_BLOB = "BLOB";
+	const TYPE_INT      = "INT(10)";
+	const TYPE_STR      = "VARCHAR(255)";
+	const TYPE_TEXT     = "TEXT";
+	const TYPE_DATE     = 'DATETIME';
+	const TYPE_COORD    = 'DECIMAL(18,12)';
+	const TYPE_BLOB     = "BLOB";
 	const TYPE_LONGBLOB = "LONGBLOB";
 	
 	private $_supported_types = array(
@@ -149,13 +149,9 @@ class model{
 	 * @return \tcore\model
 	 */
 	public function save(){
-echo "Save... ";
     	if($this->_is_dirty()){
-echo "Dirty";
 			$this->_save();
-		}else{
-echo "Clean";
-        }
+		}
 		return $this;
 	}
 	
