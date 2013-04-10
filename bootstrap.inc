@@ -55,5 +55,6 @@ foreach(scandir("../models/") as $file){
 			break;
 		default:
 			require_once("../models/{$file}");
+            new $file();
 	}
 }
