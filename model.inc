@@ -9,6 +9,7 @@ class model{
 	const TYPE_COORD    = 'DECIMAL(18,12)';
 	const TYPE_BLOB     = "BLOB";
 	const TYPE_LONGBLOB = "LONGBLOB";
+    const TYPE_ON_OFF   = "ENUM('On','Off')"
 	
 	private $_supported_types = array(
 			model::TYPE_INT, 
@@ -18,6 +19,7 @@ class model{
 			model::TYPE_COORD,
 			model::TYPE_BLOB,
 			model::TYPE_LONGBLOB,
+            model::TYPE_ON_OFF,
 	);
 	
 	protected $_table;
@@ -282,9 +284,16 @@ class model{
 			if($this->$name == $args[0]){
 				// If the parameter is equal, we wont bother marking ourselves as dirty				
 			}else{
-				if($this->_get_column_type($name) == model::TYPE_DATE){
+                $type = $this->_get_column_type($name);
+				if($type == model::TYPE_DATE){
 					$time = strtotime($args[0]);
 					$value = date("Y-m-d H:i:s", $time);
+                }elseif($type = model::TYPE_ON_OFF){
+                    if($args[0] == true){
+                        $value = "On";
+                    }else{
+                        $value = "Off";
+                    }
 				}else{
 					$value = $args[0];
 				}
