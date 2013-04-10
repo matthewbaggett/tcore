@@ -9,7 +9,7 @@ class model{
 	const TYPE_COORD    = 'DECIMAL(18,12)';
 	const TYPE_BLOB     = "BLOB";
 	const TYPE_LONGBLOB = "LONGBLOB";
-    const TYPE_ON_OFF   = "ENUM('On','Off')"
+    const TYPE_ON_OFF   = "ENUM('On','Off')";
 	
 	private $_supported_types = array(
 			model::TYPE_INT, 
