@@ -169,7 +169,21 @@ class view {
     $table = "Table goes here.";
     $table.= "<table>";
     $table.= "  <thead>";
+    $table.= "    <tr>";
+    foreach(reset($data) as $name => $value){
+      $table.= "    <th class=\"" . $this->slugify($name) . "\">{$name}</th>";
+    }
+    $table.= "    </tr>";
     $table.= "  </thead>";
+    $table.= "  <tbody>";
+    foreach($data as $row){
+      $table.= "    <tr>";
+      foreach($row as $name => $value){
+        $table.= "    <td class=\"" . $this->slugify($name) . "\">{$value}</td>";
+      }
+      $table.= "    </tr>";
+    }
+    $table.= "  </tbody>";
     $table.= "</table>";
     return $table;
   }
