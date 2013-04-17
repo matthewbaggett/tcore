@@ -94,7 +94,10 @@ class view {
     return "http://validator.w3.org/check?uri={$_SERVER['HTTP_HOST']}&charset=%28detect+automatically%29&doctype=Inline&group=0";
   }
 
-  static public function url($controller, $action, $params = null) {
+  static public function url($controller = null, $action = null, $params = null) {
+    if($controller === null){
+      $controller = "Index";
+    }
     $param_strings = array();
     if (is_array($params)) {
       foreach ($params as $key => $value) {
@@ -135,7 +138,7 @@ class view {
     return view::link($name_for_link, $controller, $action);
   }
 
-  static public function link($name_for_link, $controller, $action = null){
+  static public function link($name_for_link, $controller = null, $action = null){
     $url = view::url($controller,$action);
     $classes = array();
     $classes[] = view::slugify($name_for_link);
