@@ -131,6 +131,7 @@ class view {
   public function link($name_for_link, $controller, $action = null){
     $url = $this->url($controller,$action);
     $classes = array();
+    $classes[] = str_replace(" ", "-", strtolower($name_for_link));
     if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
       $classes[] = "active";
     }
