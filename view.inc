@@ -160,4 +160,13 @@ class view {
     }
     return $output;
   }
+
+  public function table($data){
+    $table = "Table goes here.";
+    $table.= "<table>";
+    $table.= "  <thead>";
+    $table.= "  </thead>";
+    $table.= "</table>";
+    return $table;
+  }
 }
