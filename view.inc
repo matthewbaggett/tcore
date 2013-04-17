@@ -166,6 +166,7 @@ class view {
   }
 
   public function table($data){
+    echo "<!-- "; var_dump($data); echo " -->";
     $table = "Table goes here.";
     $table.= "<table>";
     $table.= "  <thead>";
@@ -179,7 +180,7 @@ class view {
     foreach($data as $row){
       $table.= "    <tr>";
       foreach($row as $name => $value){
-        $table.= "    <td class=\"" . $this->slugify($name) . "\">{$value}</td>";
+        $table.= "    <td class=\"" . $this->slugify($name) . "\">" . (string) $value . "</td>";
       }
       $table.= "    </tr>";
     }
