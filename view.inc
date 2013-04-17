@@ -125,7 +125,7 @@ class view {
   }
 
   public function slugify($string){
-    $string = str_to_lower($string);
+    $string = strtolower($string);
     $string = preg_replace("/[^A-Za-z0-9 ]/", '', $string);
     $string = str_replace(" ", "-", $string);
     return $string;
