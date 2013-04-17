@@ -73,7 +73,6 @@ class view {
   }
 
   public function render_page() {
-
     require($this->get_page_template());
   }
 
@@ -95,7 +94,7 @@ class view {
     return "http://validator.w3.org/check?uri={$_SERVER['HTTP_HOST']}&charset=%28detect+automatically%29&doctype=Inline&group=0";
   }
 
-  public function l($controller, $action, $params = null) {
+  public function url($controller, $action, $params = null) {
     $param_strings = array();
     if (is_array($params)) {
       foreach ($params as $key => $value) {
@@ -105,15 +104,52 @@ class view {
     if (count($param_strings) > 0) {
       $str_params = "?" . implode("&", $param_strings);
     } else {
-      $str_params = '';
+      $str_params = null;
     }
-
-    return "/{$controller}/{$action}/{$str_params}";
+    if(!$action && $params !== null){
+      $action = "Index";
+    }
+    if($action || $str_params){
+      $url = "/{$controller}/{$action}/{$str_params}";
+    }elseif($action && !$str_params){
+      $url = "/{$controller}/{$action}";
+    }else{
+      $url = "/{$controller}";
+    }
+    return $url;
   }
 
   public function redirect($controller, $action, $params = null) {
-
     header("Location: {$this->l($controller, $action, $params)}");
     exit;
+  }
+
+  public function l($name_for_link, $controller, $action = null){
+    return $this->link($name_for_link, $controller, $action);
+  }
+
+  public function link($name_for_link, $controller, $action = null){
+    $url = $this->url($controller,$action);
+    $classes = array();
+    if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
+      $classes[] = "active";
+    }
+    return "<a href=\"" . $url . " class=\"" . implode(" ", $classes) . "\">{$name_for_link}</a>";
+  }
+
+  public function t($string, $replacements = null){
+    return $this->translate($string, $replacements);
+  }
+
+  public function translate($string, $replacements = null){
+    $output = $string;
+    if($replacements !== null){
+      if(count($replacements) > 0){
+        foreach($replacements as $original => $replacement){
+          $output = str_replace($original, $replacement, $output);
+        }
+      }
+    }
+    return $output;
   }
 }
