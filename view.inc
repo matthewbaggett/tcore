@@ -124,6 +124,13 @@ class view {
     exit;
   }
 
+  public function slugify($string){
+    $string = str_to_lower($string);
+    $string = preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+    $string = str_replace(" ", "-", $string);
+    return $string;
+  }
+
   public function l($name_for_link, $controller, $action = null){
     return $this->link($name_for_link, $controller, $action);
   }
@@ -131,7 +138,7 @@ class view {
   public function link($name_for_link, $controller, $action = null){
     $url = $this->url($controller,$action);
     $classes = array();
-    $classes[] = str_replace(" ", "-", strtolower($name_for_link));
+    $classes[] = $this->slugify($name_for_link);
     if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
       $classes[] = "active";
     }
