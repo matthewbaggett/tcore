@@ -139,10 +139,11 @@ class view {
     $url = $this->url($controller,$action);
     $classes = array();
     $classes[] = $this->slugify($name_for_link);
+    echo "<!-- comparisonzzz" . trim($url, "/") . " == " . trim($_SERVER['REQUEST_URI'], "/") . " -->\n";
     if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
       $classes[] = "active";
     }
-    return "<a href=\"" . $url . "\" class=\"" . implode(" ", $classes) . "\">{$name_for_link}</a>";
+    return "<a href=\"" . $url . "\" class=\"" . implode(" ", $classes) . "\">{$name_for_link}</a>\n";
   }
 
   public function t($string, $replacements = null){
