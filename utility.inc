@@ -1,4 +1,4 @@
 <?php
 function t($string, $replacements = null){
-  return view::translate($string, $replacements);
+  return \tcore\view::translate($string, $replacements);
 }
