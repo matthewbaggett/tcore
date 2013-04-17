@@ -32,6 +32,8 @@ require_once("model_search_condition.inc");
 require_once("tcore.inc");
 require_once("view.inc");
 
+require_once("utility.inc");
+
 require_once("../controllers/BaseController.inc");
 
 function attempt_define($key, $value) {

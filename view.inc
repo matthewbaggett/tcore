@@ -171,7 +171,3 @@ class view {
     return $table;
   }
 }
-
-function t($string, $replacements = null){
-  return view::translate($string, $replacements);
-}
