@@ -142,7 +142,7 @@ class view {
     $url = view::url($controller,$action);
     $classes = array();
     $classes[] = view::slugify($name_for_link);
-    echo "<!-- comparisonzzz" . trim($url, "/") . " == " . trim($_SERVER['REQUEST_URI'], "/") . " -->\n";
+    echo "<!-- comparisonzzz " . trim($url, "/") . " == " . trim($_SERVER['REQUEST_URI'], "/") . " -->\n";
     if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
       $classes[] = "active";
     }
