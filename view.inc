@@ -166,12 +166,15 @@ class view {
   }
 
   public function table($data){
-    echo "<!-- "; var_dump($data); echo " -->";
+    #echo "<!-- "; var_dump($data); echo " -->";
     $table = "Table goes here.";
     $table.= "<table>";
     $table.= "  <thead>";
     $table.= "    <tr>";
     foreach(reset($data) as $name => $value){
+      if(substr($name,0,1) == "_"){
+        continue;
+      }
       $table.= "    <th class=\"" . $this->slugify($name) . "\">{$name}</th>";
     }
     $table.= "    </tr>";
@@ -180,6 +183,9 @@ class view {
     foreach($data as $row){
       $table.= "    <tr>";
       foreach($row as $name => $value){
+        if(substr($name,0,1) == "_"){
+          continue;
+        }
         $table.= "    <td class=\"" . $this->slugify($name) . "\">" . (string) $value . "</td>";
       }
       $table.= "    </tr>";
