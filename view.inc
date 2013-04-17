@@ -147,10 +147,10 @@ class view {
   }
 
   public function t($string, $replacements = null){
-    return $this->translate($string, $replacements);
+    return view::translate($string, $replacements);
   }
 
-  public function translate($string, $replacements = null){
+  static public function translate($string, $replacements = null){
     $output = $string;
     if($replacements !== null){
       if(count($replacements) > 0){
@@ -170,4 +170,8 @@ class view {
     $table.= "</table>";
     return $table;
   }
+}
+
+function t($string, $replacements = null){
+  return view::translate($string, $replacements);
 }
