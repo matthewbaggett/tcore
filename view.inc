@@ -94,7 +94,7 @@ class view {
     return "http://validator.w3.org/check?uri={$_SERVER['HTTP_HOST']}&charset=%28detect+automatically%29&doctype=Inline&group=0";
   }
 
-  public function url($controller, $action, $params = null) {
+  static public function url($controller, $action, $params = null) {
     $param_strings = array();
     if (is_array($params)) {
       foreach ($params as $key => $value) {
@@ -124,7 +124,7 @@ class view {
     exit;
   }
 
-  public function slugify($string){
+  static public function slugify($string){
     $string = strtolower($string);
     $string = preg_replace("/[^A-Za-z0-9 ]/", '', $string);
     $string = str_replace(" ", "-", $string);
@@ -132,13 +132,13 @@ class view {
   }
 
   public function l($name_for_link, $controller, $action = null){
-    return $this->link($name_for_link, $controller, $action);
+    return view::link($name_for_link, $controller, $action);
   }
 
-  public function link($name_for_link, $controller, $action = null){
-    $url = $this->url($controller,$action);
+  static public function link($name_for_link, $controller, $action = null){
+    $url = view::url($controller,$action);
     $classes = array();
-    $classes[] = $this->slugify($name_for_link);
+    $classes[] = view::slugify($name_for_link);
     echo "<!-- comparisonzzz" . trim($url, "/") . " == " . trim($_SERVER['REQUEST_URI'], "/") . " -->\n";
     if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
       $classes[] = "active";
