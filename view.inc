@@ -142,7 +142,7 @@ class view {
     if(trim($url, "/") == trim($_SERVER['REQUEST_URI'], "/")){
       $classes[] = "active";
     }
-    return "<a href=\"" . $url . " class=\"" . implode(" ", $classes) . "\">{$name_for_link}</a>";
+    return "<a href=\"" . $url . "\" class=\"" . implode(" ", $classes) . "\">{$name_for_link}</a>";
   }
 
   public function t($string, $replacements = null){
