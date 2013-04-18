@@ -14,6 +14,7 @@ class model {
 
   private $_supported_types = array(
     model::TYPE_INT,
+    model::TYPE_LONGINT,
     model::TYPE_STR,
     model::TYPE_TEXT,
     model::TYPE_DATE,
