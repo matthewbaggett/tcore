@@ -214,6 +214,8 @@ class model {
 
     // Update the row
     $response = db::get_instance()->exec($sql_update);
+
+    \fb::log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
   }
 
   /**
@@ -244,6 +246,8 @@ class model {
 
     // Set the ID of this object to be the lastInsertId from the DB layer
     $this->set_id(db::get_instance()->lastInsertId());
+
+    \fb::log($sql_insert, "Inserting " . get_called_class() . " id = " . $this->get_id());
 
     // Reload this model object.
     $this->reload();
