@@ -1,10 +1,6 @@
 <?php
 // Require external components
 require_once("../lib/firephp/lib/FirePHPCore/fb.php");
-require_once("../lib/eden/library/eden.php");
-require_once("../lib/eden/library/eden/oauth2.php");
-require_once("../lib/eden/library/eden/amazon.php");
-require_once("../lib/eden/library/eden/google.php");
 
 // Require in PHP SEC lib
 require_once("../lib/tcore/lib/phpseclib/Math/BigInteger.php");
