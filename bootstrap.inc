@@ -1,14 +1,19 @@
 <?php
-
-
 /*
- * Require external components
+ * Bootstrap.
+ * 1. Require external components
+ * 2. Define Paths.
+ *
+ * We will be booted from elsewhere.
  */
 // Fire PHP
 require_once("../lib/firephp/lib/FirePHPCore/fb.php");
 
 // Krumo
 require_once("../lib/krumo/class.krumo.php");
+
+// Pretty exceptions
+require_once("../lib/pretty-exceptions/loader.php");
 
 // Require in PHP SEC lib
 require_once("../lib/tcore/lib/phpseclib/Math/BigInteger.php");
