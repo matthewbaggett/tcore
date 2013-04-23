@@ -2,6 +2,7 @@
 // Define roots
 define("TCORE_PUBLIC_ROOT", $_SERVER['DOCUMENT_ROOT'] . "/");
 define("TCORE_PRIVATE_ROOT", TCORE_PUBLIC_ROOT . "../");
+define("TCORE_LOGS", TCORE_PRIVATE_ROOT . "logs/");
 
 // Require external components
 require_once("../lib/firephp/lib/FirePHPCore/fb.php");

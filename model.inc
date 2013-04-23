@@ -434,7 +434,8 @@ class model {
       $log_row = var_export($item);
     }
     $timestamp = "[" . date("Y-m-d H:i:s") . "]";
-    file_put_contents(TCORE_ROOT . "/logs/model.log", "{$timestamp} {$log_row}\n\n" , FILE_APPEND);
+    $class = $this->get_table();
+    file_put_contents(TCORE_LOGS . "/model.{$class}.log", "{$timestamp} {$log_row}\n\n" , FILE_APPEND);
   }
 
 }
