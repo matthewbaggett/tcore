@@ -160,7 +160,10 @@ class tcore {
     return $messages;
   }
 
-  static function log($item, $label = null, $named_logfile = "tcore.log") {
+  static function log($item, $label = null, $named_logfile = null) {
+    if($named_logfile === null){
+      $named_logfile = "tcore.log";
+    }
     \fb::log($item, $label);
 
     if($label){
@@ -169,6 +172,6 @@ class tcore {
       $log_row = var_export($item, true);
     }
     $timestamp = "[" . date("Y-m-d H:i:s") . "]";
-    file_put_contents(TCORE_LOGS . "/{$named_logfile}", "{$timestamp} {$log_row}\n\n", FILE_APPEND);
+    @file_put_contents(TCORE_LOGS . "/{$named_logfile}", "{$timestamp} {$log_row}\n\n", FILE_APPEND);
   }
 }
