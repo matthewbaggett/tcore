@@ -41,23 +41,3 @@ function attempt_define($key, $value) {
     define($key, $value);
   }
 }
-
-// Load Configs.
-$machinename = strtolower(gethostname());
-if (file_exists("../config/{$machinename}.inc")) {
-  require_once("../config/{$machinename}.inc");
-}
-require_once("../config/default.inc");
-
-foreach (scandir("../models/") as $file) {
-  switch ($file) {
-    case '.':
-    case '..':
-    case '.svn':
-      break;
-    default:
-      $class = str_replace(".inc", "", $file);
-      require_once("../models/{$file}");
-      new $class();
-  }
-}

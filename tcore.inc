@@ -7,10 +7,10 @@ class tcore {
   static $route;
 
   static public function run() {
-    \tcore\tcore::log("tcore::run");
-
     // Start buffering output
     ob_start();
+
+    \tcore\tcore::log("tcore::run");
 
     // Run initialisation
     self::init();
@@ -27,6 +27,29 @@ class tcore {
 
     // And spit it at the user.
     echo $output;
+  }
+
+  static public function configure(){
+    // Load Configs.
+    $machinename = strtolower(gethostname());
+    if (file_exists("../config/{$machinename}.inc")) {
+      require_once("../config/{$machinename}.inc");
+    }
+    require_once("../config/default.inc");
+
+    foreach (scandir("../models/") as $file) {
+      switch ($file) {
+        case '.':
+        case '..':
+        case '.svn':
+          break;
+        default:
+          $class = str_replace(".inc", "", $file);
+          require_once("../models/{$file}");
+          new $class();
+      }
+    }
+
   }
 
   static public function init() {
