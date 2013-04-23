@@ -215,7 +215,7 @@ class model {
     // Update the row
     $response = db::get_instance()->exec($sql_update);
 
-    $this->_log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
+    \tcore::log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
   }
 
   /**
@@ -247,7 +247,7 @@ class model {
     // Set the ID of this object to be the lastInsertId from the DB layer
     $this->set_id(db::get_instance()->lastInsertId());
 
-    \fb::log($sql_insert, "Inserting " . get_called_class() . " id = " . $this->get_id());
+    \tcore::log($sql_insert, "Inserting " . get_called_class() . " id = " . $this->get_id());
 
     // Reload this model object.
     $this->reload();
@@ -427,16 +427,7 @@ class model {
     return new \tcore\model_search(new $class);
   }
 
-  private function _log($item, $label = null){
-    if($label){
-      $log_row = "$label : " . var_export($item, true);
-    }else{
-      $log_row = var_export($item);
-    }
-    $timestamp = "[" . date("Y-m-d H:i:s") . "]";
-    $class = $this->get_table();
-    file_put_contents(TCORE_LOGS . "/model.{$class}.log", "{$timestamp} {$log_row}\n\n" , FILE_APPEND);
-  }
+
 
 }
 

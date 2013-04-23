@@ -37,6 +37,11 @@ class db extends \PDO {
     //\tcore\tcore::log("SQL: " . $statement);
     parent::exec($statement);
   }
+
+  public function query($statement){
+    tcore::log($statement, null, 'query.log');
+    return parent::query($statement);
+  }
 }
 
 class db_statement extends \PDOStatement {
