@@ -1,4 +1,8 @@
 <?php
+// Define roots
+define("TCORE_PUBLIC_ROOT", $_SERVER['DOCUMENT_ROOT'] . "/");
+define("TCORE_PRIVATE_ROOT", TCORE_PUBLIC_ROOT . "../");
+
 // Require external components
 require_once("../lib/firephp/lib/FirePHPCore/fb.php");
 
@@ -19,8 +23,6 @@ require_once("../lib/tcore/lib/phpseclib/Net/SSH1.php");
 require_once("../lib/tcore/lib/phpseclib/Net/SSH2.php");
 require_once("../lib/tcore/lib/phpseclib/Net/SFTP.php");
 
-var_dump($_SERVER);exit;
-define("TCORE_ROOT", "");
 // Require internal components
 require_once("db.inc");
 require_once("inflect.inc");
@@ -29,7 +31,6 @@ require_once("model_search.inc");
 require_once("model_search_condition.inc");
 require_once("tcore.inc");
 require_once("view.inc");
-
 require_once("utility.inc");
 
 require_once("../controllers/BaseController.inc");
