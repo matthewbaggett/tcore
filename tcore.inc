@@ -161,6 +161,15 @@ class tcore {
   }
 
   static function log($item, $label = null, $named_logfile = null) {
+    if(!isset($_GLOBALS['tcore_log_count'])){
+      $_GLOBALS['tcore_log_count'] = 0;
+    }
+
+    // Do not log more than 100 events per load.. Thats just silly.
+    if($_GLOBALS['tcore_log_count'] >= TCORE_LOGGING_MAX_EVENTS_PER_PAGE){
+      return;
+    }
+
     if($named_logfile === null){
       $named_logfile = "tcore.log";
     }
@@ -178,5 +187,7 @@ class tcore {
       $timestamp = "[" . date("Y-m-d H:i:s") . "]";
       @file_put_contents(TCORE_LOGS . "/{$named_logfile}", "{$timestamp} {$log_row}\n\n", FILE_APPEND);
     }
+
+    $_GLOBALS['tcore_log_count']++;
   }
 }

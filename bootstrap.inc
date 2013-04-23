@@ -1,10 +1,5 @@
 <?php
-// Define roots
-define("TCORE_PUBLIC_ROOT", $_SERVER['DOCUMENT_ROOT'] . "/");
-define("TCORE_PRIVATE_ROOT", TCORE_PUBLIC_ROOT . "../");
-define("TCORE_LOGS", TCORE_PRIVATE_ROOT . "logs/");
-attempt_define("TCORE_LOGGING_FILE_ENABLED", false);
-attempt_define("TCORE_LOGGING_FIREPHP_ENABLED", false);
+
 
 // Require external components
 require_once("../lib/firephp/lib/FirePHPCore/fb.php");
@@ -38,8 +33,11 @@ require_once("utility.inc");
 
 require_once("../controllers/BaseController.inc");
 
-function attempt_define($key, $value) {
-  if (!defined($key)) {
-    define($key, $value);
-  }
-}
+// Define roots
+define("TCORE_PUBLIC_ROOT", $_SERVER['DOCUMENT_ROOT'] . "/");
+define("TCORE_PRIVATE_ROOT", TCORE_PUBLIC_ROOT . "../");
+define("TCORE_LOGS", TCORE_PRIVATE_ROOT . "logs/");
+attempt_define("TCORE_LOGGING_FILE_ENABLED", false);
+attempt_define("TCORE_LOGGING_FIREPHP_ENABLED", false);
+attempt_define("TCORE_LOGGING_MAX_EVENTS_PER_PAGE", 100);
+
