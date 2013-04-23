@@ -114,7 +114,11 @@ class tcore {
     self::$view->set_page_template($view_file);
 
     $oController = new $controller(self::$view);
-    $oController->$action();
+    if(method_exists($oController, $action)){
+      $oController->$action();
+    }else{
+      throw Exception("No such action {$action}");
+    }
   }
 
   static public function render() {
