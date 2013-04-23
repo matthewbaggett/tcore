@@ -166,7 +166,7 @@ class view {
   }
 
   public function table($data){
-    #echo "<!-- "; var_dump($data); echo " -->";
+    krumo($data);
     $table = "Table goes here.";
     $table.= "<table>";
     $table.= "  <thead>";
