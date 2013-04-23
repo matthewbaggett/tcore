@@ -117,7 +117,7 @@ class tcore {
     if(method_exists($oController, $action)){
       $oController->$action();
     }else{
-      throw Exception("No such action {$action}");
+      throw \Exception("No such action {$action}");
     }
   }
 
