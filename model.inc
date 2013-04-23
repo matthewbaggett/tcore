@@ -50,7 +50,7 @@ class model {
   private function _table_construct() {
     $db                  = new db();
     $sql_construct_table = $this->_table_construct_sql();
-    tcore::log($sql_construct_table);
+    //tcore::log($sql_construct_table);
     $db->exec($sql_construct_table);
   }
 
@@ -220,7 +220,7 @@ class model {
     // Update the row
     $response = db::get_instance()->exec($sql_update);
 
-    tcore::log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
+    //tcore::log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
   }
 
   /**
@@ -252,7 +252,7 @@ class model {
     // Set the ID of this object to be the lastInsertId from the DB layer
     $this->set_id(db::get_instance()->lastInsertId());
 
-    tcore::log($sql_insert, "Inserting " . get_called_class() . " id = " . $this->get_id());
+    //tcore::log($sql_insert, "Inserting " . get_called_class() . " id = " . $this->get_id());
 
     // Reload this model object.
     $this->reload();
