@@ -159,7 +159,7 @@ class model {
   /**
    * Save the Model
    *
-   * @return tcore\model
+   * @return \tcore\model
    */
   public function save() {
     if ($this->_is_dirty()) {
@@ -258,7 +258,7 @@ class model {
    *
    * @param integer|string $id
    *
-   * @return tcore\model
+   * @return \tcore\model
    */
   public function load_by_id($id) {
     $db_name    = db::get_database_name();
@@ -271,7 +271,7 @@ class model {
   /**
    * Reload this object.
    *
-   * @return tcore\model
+   * @return \tcore\model
    */
   public function reload() {
     return $this->load_by_id($this->get_id());
@@ -284,7 +284,7 @@ class model {
    * @param variables passed $arguments
    *
    * @throws \exception
-   * @return tcoretcore\model
+   * @return \tcore\model
    */
   public function __call($name, $arguments) {
     if (substr($name, 0, 4) == "get_") {
@@ -303,7 +303,7 @@ class model {
    * @param variables passed $arguments
    *
    * @throws \exception
-   * @return tcore\model
+   * @return \tcore\model
    */
   protected function _set($name, $args) {
     if (property_exists($this, $name)) {
@@ -407,7 +407,7 @@ class model {
    *
    * @param integer|string $id
    *
-   * @return tcore\model
+   * @return \tcore\model
    */
   public function set_id($id) {
     $id_column        = $this->_get_id_column();
@@ -419,12 +419,12 @@ class model {
   /**
    * Start a search on this type of active record
    *
-   * @return tcore\model_search
+   * @return \tcore\model_search
    */
   static public function search() {
     $class = get_called_class();
 
-    return new tcore\model_search(new $class);
+    return new \tcore\model_search(new $class);
   }
 
 
