@@ -13,7 +13,7 @@ require_once("../lib/firephp/lib/FirePHPCore/fb.php");
 require_once("../lib/krumo/class.krumo.php");
 
 // Pretty exceptions
-require_once("../lib/pretty-exceptions/loader.php");
+require_once("../lib/pretty-exceptions/Library/Phalcon/Utils/PrettyExceptions.php");
 
 // Require in PHP SEC lib
 require_once("../lib/tcore/lib/phpseclib/Math/BigInteger.php");
@@ -52,3 +52,24 @@ attempt_define("TCORE_LOGGING_FILE_ENABLED", false);
 attempt_define("TCORE_LOGGING_FIREPHP_ENABLED", false);
 attempt_define("TCORE_LOGGING_MAX_EVENTS_PER_PAGE", 100);
 
+// Set up exception handling
+
+/**
+ * Sets the exception handler
+ */
+set_exception_handler(function($e)
+{
+  $p = new PrettyExceptions();
+  $p->handle($e);
+  exit;
+});
+
+/**
+ * Sets the error handler
+ */
+set_error_handler(function($errorCode, $errorMessage, $errorFile, $errorLine)
+{
+  $p = new PrettyExceptions();
+  $p->handleError($errorCode, $errorMessage, $errorFile, $errorLine);
+  exit;
+});
