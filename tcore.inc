@@ -161,12 +161,12 @@ class tcore {
   }
 
   static function log($item, $label = null, $named_logfile = "tcore.log") {
-    //\fb::log($item, $label);
+    \fb::log($item, $label);
 
     if($label){
       $log_row = "$label : " . var_export($item, true);
     }else{
-      $log_row = var_export($item);
+      $log_row = var_export($item, true);
     }
     $timestamp = "[" . date("Y-m-d H:i:s") . "]";
     file_put_contents(TCORE_LOGS . "/{$named_logfile}", "{$timestamp} {$log_row}\n\n", FILE_APPEND);
