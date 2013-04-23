@@ -215,7 +215,7 @@ class model {
     // Update the row
     $response = db::get_instance()->exec($sql_update);
 
-    \fb::log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
+    $this->_log($sql_update, "Updating " . get_called_class() . " id = " . $this->get_id());
   }
 
   /**
@@ -427,6 +427,15 @@ class model {
     return new \tcore\model_search(new $class);
   }
 
+  private function _log($item, $label = null){
+    if($label){
+      $log_row = "$label : " . var_export($item, true);
+    }else{
+      $log_row = var_export($item);
+    }
+    $timestamp = "[" . date("Y-m-d H:i:s") . "]";
+    file_put_contents(TCORE_ROOT . "/logs/model.log", "{$timestamp} {$log_row}\n\n" , FILE_APPEND);
+  }
 
 }
 

@@ -19,6 +19,8 @@ require_once("../lib/tcore/lib/phpseclib/Net/SSH1.php");
 require_once("../lib/tcore/lib/phpseclib/Net/SSH2.php");
 require_once("../lib/tcore/lib/phpseclib/Net/SFTP.php");
 
+var_dump($_SERVER);exit;
+define("TCORE_ROOT", "");
 // Require internal components
 require_once("db.inc");
 require_once("inflect.inc");
