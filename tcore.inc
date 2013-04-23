@@ -7,8 +7,6 @@ class tcore {
   static $route;
 
   static public function run() {
-    // Start buffering output
-    ob_start();
 
     \tcore\tcore::log("tcore::run");
 
@@ -30,6 +28,9 @@ class tcore {
   }
 
   static public function configure(){
+    // Start buffering output
+    ob_start();
+
     // Load Configs.
     $machinename = strtolower(gethostname());
     if (file_exists("../config/{$machinename}.inc")) {
