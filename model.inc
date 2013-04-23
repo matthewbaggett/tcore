@@ -74,8 +74,8 @@ class model {
 
   private function _table_exists() {
     $db = db::get_instance();
-    if(!isset($_GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'])){
-      $_GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'] = $db->query("
+    if(!isset($GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'])){
+      $GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'] = $db->query("
 				SELECT table_name
 				FROM information_schema.tables
 				WHERE table_schema = '" . db::get_database_name() . "'
@@ -83,7 +83,7 @@ class model {
 				")->foundRows();
     }
 
-    $table_exists_check = $_GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'];
+    $table_exists_check = $GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'];
 
     if ($table_exists_check > 0) {
       return true;
