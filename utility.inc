@@ -11,3 +11,7 @@ function l($name_for_link, $controller = null, $action = null){
 function u($controller = null, $action = null, $params = null){
   return \tcore\view::url($controller, $action, $params);
 }
+
+function log($object, $label = null, $file = null){
+  return \tcore\tcore::log($object, $label, $file);
+}
