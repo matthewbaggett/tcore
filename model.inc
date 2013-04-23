@@ -73,14 +73,19 @@ class model {
   }
 
   private function _table_exists() {
-    $db                 = db::get_instance();
-    $table_exists_check = $db->query("
+    $db = db::get_instance();
+    if(!isset($_GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'])){
+      $_GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'] = $db->query("
 				SELECT table_name
 				FROM information_schema.tables
 				WHERE table_schema = '" . db::get_database_name() . "'
 				AND table_name = '{$this->_table}';
-				");
-    if ($table_exists_check->foundRows() > 0) {
+				")->foundRows();
+    }
+
+    $table_exists_check = $_GLOBALS['tcore_schema'][db::get_database_name()][$this->_table]['row_count'];
+
+    if ($table_exists_check > 0) {
       return true;
     } else {
       return false;
