@@ -3,7 +3,7 @@ namespace tcore;
 
 class model {
   const TYPE_INT      = "INT(10)";
-  const TYPE_LONGINT  = "INT(32)";
+  const TYPE_LONGINT  = "BIGINT(20)";
   const TYPE_STR      = "VARCHAR(255)";
   const TYPE_TEXT     = "TEXT";
   const TYPE_DATE     = 'DATETIME';
