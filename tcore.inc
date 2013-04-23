@@ -161,6 +161,9 @@ class tcore {
   }
 
   static function log($item, $label = null, $named_logfile = null) {
+    if(!TCORE_LOGGING_ENABLED){
+      return FALSE;
+    }
     if($named_logfile === null){
       $named_logfile = "tcore.log";
     }
