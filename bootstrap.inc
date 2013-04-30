@@ -61,7 +61,7 @@ set_exception_handler(function($e)
 {
   $p = new \Phalcon\Utils\PrettyExceptions();
   $p->handle($e);
-  exit;
+  //exit;
 });
 
 /**
@@ -71,5 +71,5 @@ set_error_handler(function($errorCode, $errorMessage, $errorFile, $errorLine)
 {
   $p = new \Phalcon\Utils\PrettyExceptions();
   $p->handleError($errorCode, $errorMessage, $errorFile, $errorLine);
-  exit;
+  //exit;
 });
