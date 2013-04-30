@@ -57,19 +57,19 @@ attempt_define("TCORE_LOGGING_MAX_EVENTS_PER_PAGE", 100);
 /**
  * Sets the exception handler
  */
-set_exception_handler(function($e)
-{
-  $p = new \Phalcon\Utils\PrettyExceptions();
-  $p->handle($e);
-  exit;
-});
+//set_exception_handler(function($e)
+//{
+//  $p = new \Phalcon\Utils\PrettyExceptions();
+//  $p->handle($e);
+//  exit;
+//});
 
 /**
  * Sets the error handler
  */
-set_error_handler(function($errorCode, $errorMessage, $errorFile, $errorLine)
-{
-  $p = new \Phalcon\Utils\PrettyExceptions();
-  $p->handleError($errorCode, $errorMessage, $errorFile, $errorLine);
-  exit;
-});
+//set_error_handler(function($errorCode, $errorMessage, $errorFile, $errorLine)
+//{
+//  $p = new \Phalcon\Utils\PrettyExceptions();
+//  $p->handleError($errorCode, $errorMessage, $errorFile, $errorLine);
+//  exit;
+//});
