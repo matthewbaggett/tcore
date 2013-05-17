@@ -72,7 +72,7 @@ class model_search {
     $result = db::get_instance()->query($sql_search);
 
     // Catch errors
-    if(db::get_instance()->errorCode()){
+    if(intval(db::get_instance()->errorCode()) > 0){
       $err_array = db::get_instance()->errorInfo();
       throw new \Exception("SQL SEARCH ERROR #" . db::get_instance()->errorCode() . ": (" . implode(", ", $err_array) . ")");
     }
