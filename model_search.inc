@@ -68,14 +68,13 @@ class model_search {
 			{$sql_order}
 			{$sql_limit}";
 
-    echo "Search SQL: {$sql_search}\n";
-
     // Get objects
     $result = db::get_instance()->query($sql_search);
 
     // Catch errors
     if(db::get_instance()->errorCode()){
-      throw new \Exception("SQL SEARCH ERROR: " . db::get_instance()->errorInfo());
+      $err_array = db::get_instance()->errorInfo();
+      throw new \Exception("SQL SEARCH ERROR: " . $err_array['Information']);
     }
 
     // Prep an array for our output
