@@ -16,6 +16,7 @@ class model_search_condition {
       case 'IN':
         echo "`{$this->column}` IN ( '". implode("', '", $this->value) . " ')";
         return "`{$this->column}` IN ( '". implode("', '", $this->value) . " ')";
+
       default:
         return "`{$this->column}` {$this->operation} '{$this->value}'";
     }
