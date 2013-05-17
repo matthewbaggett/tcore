@@ -157,13 +157,29 @@ class tcore {
     return true;
   }
 
+  /**
+   * Fetch messages from Session
+   *
+   * @return bool|Array of messages
+   */
   static function get_messages() {
-    $messages = $_SESSION['messages'];
+    if(isset($_SESSION['messages'])){
+      $messages = $_SESSION['messages'];
+    }else{
+      $messages = false;
+    }
     unset($_SESSION['messages']);
 
     return $messages;
   }
 
+  /**
+   * Log to various services
+   *
+   * @param object $item
+   * @param string|null $label
+   * @param string|null $named_logfile
+   */
   static function log($item, $label = null, $named_logfile = null) {
     if(!isset($_GLOBALS['tcore_log_count'])){
       $_GLOBALS['tcore_log_count'] = 0;
