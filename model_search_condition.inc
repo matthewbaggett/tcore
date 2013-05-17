@@ -14,7 +14,6 @@ class model_search_condition {
   public function digest() {
     switch(strtoupper($this->operation)){
       case 'IN':
-        echo "`{$this->column}` IN ( '". implode("', '", $this->value) . "')";
         return "`{$this->column}` IN ( '". implode("', '", $this->value) . "')";
 
       default:
