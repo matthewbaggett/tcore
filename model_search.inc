@@ -74,6 +74,7 @@ class model_search {
     // Catch errors
     if(db::get_instance()->errorCode()){
       $err_array = db::get_instance()->errorInfo();
+      var_dump($err_array);
       throw new \Exception("SQL SEARCH ERROR: " . $err_array['Information']);
     }
 
