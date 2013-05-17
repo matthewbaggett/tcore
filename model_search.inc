@@ -68,6 +68,8 @@ class model_search {
 			{$sql_order}
 			{$sql_limit}";
 
+    echo "Search SQL: {$sql_search}\n";
+
     // Get objects
     $result = db::get_instance()->query($sql_search);
 
