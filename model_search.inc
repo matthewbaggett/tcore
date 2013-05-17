@@ -73,6 +73,11 @@ class model_search {
     // Get objects
     $result = db::get_instance()->query($sql_search);
 
+    // Catch errors
+    if(db::get_instance()->errorCode()){
+      throw new Exception("SQL SEARCH ERROR: " . db::get_instance()->errorInfo());
+    }
+
     // Prep an array for our output
     $rows = array();
 
